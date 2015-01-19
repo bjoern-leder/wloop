@@ -1,0 +1,84 @@
+
+
+********************************************************************************
+
+                                 Wloops
+
+********************************************************************************
+
+
+Files
+-----
+
+smear.c            Smearing of spatial links.
+
+wloop.c            Computation of Wilson loops.
+
+wloop_parms.c      Wilson loops parameter data base.
+
+
+Include file
+------------
+
+The file wloop.h defines the prototypes for all externally accessible
+functions that are defined in the *.c files listed above.
+
+
+List of functions
+-----------------
+
+ void smear(void) 
+   Applies smearing operators to the spatial links. The number of applications
+  (smearing level) is obtainted form the wloop_parms data base.
+ 
+ su3_dble** get_pus(void)
+   Returns array of base addresses for smeared spatial links.
+ 
+ void free_smear(void)
+   Free auxillary memory.
+
+ void wloop_sum(int keep)
+   Calculates the Wilson loops correlation matrix. This matrix is stored
+   in the array wl.wl_mat[ii]; the index ii is calculated by using the
+   function wl_idx(sl1,sl2,t,r,x0) defined in the file wloop_parms.c.
+   If keep equal zero the auxillary memory will be freed at the end,
+   otherwise it is kept allocated.
+
+ void free_wloop(void)
+   Free auxillary memory.
+
+ wloop_parms_t set_wloop_parms(int msl,int nss[],int mwlt,int mwlr,op_smear_t op_smear,
+                               double alpha_action[3],double alpha_ape, double alpha_hyp[2],
+                               int proj_iter)
+   Sets the wloop parameters and returns a structure containing them. The
+   parameters are
+
+     msl          number of smearing levels
+     nss[msl]     number of smearing steps per levels
+     mwlt         maximal wloop temporal extension
+     mwlr         maximal wloop spacial extension
+     op_smear     maximal wloop spacial extension
+     alpha_action HYP smearing parameters for static action
+     alpha_ape    APE smearing parameter for spatial links
+     alpha_hyp    HYP smearing parameters for spatial links
+     proj_iter    number of iterations of the SU(3)-projection         
+
+ wloop_parms_t wloop_parms()
+   Returns a structure containing the wloop parameter set.
+
+ void read_wloop_parms()
+   On process 0, this program scans stdin for a line starting with the
+   string "[Wloop]" (after any number of blanks). An error occurs if no such
+   line or more than one is found.
+
+ void print_wloop_parms()
+   Prints the wloop parameters to stdout on MPI process 0.
+   On MPI processes other than 0, the program does nothing.
+
+ void write_wloop_parms(FILE *fdat)
+   Writes the wloop parameters to the file fdat on MPI process 0.
+
+ void check_wloop_parms(FILE *fdat)
+   Compares the wloop parameters with those stored on the file fdat on
+   MPI process 0, assuming the latter were written to the file by the
+   program write_wloop_parms().

@@ -1,0 +1,67 @@
+
+********************************************************************************
+
+                         Wilson loop computation
+
+********************************************************************************
+
+
+WILSON LOOPS
+
+The programs compute rectangular Wilson on imported gauge configuration. The 
+links are smeared to (i) define a static action and (ii) to construct an
+operator basis which results in a Wilson loop correlation matrix. See
+
+  M.Donnellan, F.Knechtli, B.Leder and R.Sommer,
+  ``Determination of the Static Potential with Dynamical Fermions,''
+  Nucl. Phys. B 849 (2011) 45
+  arXiv:1012.3037 [hep-lat].
+
+for details.
+
+The currently supported boundary conditions are periodic and open. For a
+description of how-to run the program and the output see the README in the
+main subdirectory. 
+
+
+PROGRAM FEATURES
+
+All programs parallelize in 0,1,2,3 or 4 dimensions, depending on what is
+specified at compilation time.
+
+
+OPENQCD PACKAGE
+
+All programs use the openQCD package modules as library. The package has to
+be present at compile time in a directory to be specified in the Makefile.
+The currently supported version is openQCD-1.4.
+
+
+COMPILATION
+
+The compilation of the programs is in accordance with openQCD-1.4. See there for
+details.
+
+
+AUTHORS
+
+The initial release of the wloop package was written by Björn Leder. Initial
+support for open boundary conditions was added by Jacob Finkenrath.
+
+
+ACKNOWLEDGEMENTS
+
+An early version of the code is based on a Wilson loop program by Nazario Tantalo.
+
+
+LICENSE
+
+The software may be used under the terms of the GNU General Public Licence
+(GPL).
+
+
+BUG REPORTS
+
+If a bug is discovered, please send a report to <leder@physik.hu-berlin.de>.
+
+ 

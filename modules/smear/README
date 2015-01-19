@@ -1,0 +1,91 @@
+
+
+********************************************************************************
+
+                                 Smear
+
+********************************************************************************
+
+
+Files
+-----
+
+ape_links.c            Calculation of APE-smeared links.
+
+hyp_links.c            Calculation of HYP-smeared links.
+
+hyp_spatial_links.c    Calculation of HYP-smeared spatial link.
+
+projection.c           Projection to SU(3).
+
+staple_sum.c           Computes the sum of up- and down-staples.
+
+
+Include file
+------------
+
+The file smear.h defines the prototypes for all externally accessible
+functions that are defined in the *.c files listed above.
+
+
+List of functions
+-----------------
+
+ void free_ape_links()
+   Frees all the allocated memory.
+
+ void ape_links(su3_dble* ub, double a, int proj_su3, int piter, int keep)
+   Replaces all 3-d double-precision link variables by the APE-smeared
+   ones. alpha is the parameters of the APE-smearing and for proj_su3
+   unequal zero a projection back to SU(3) is performed. piter is a iteration
+   number controlling the projection methode used.
+   For keep unequal zero the allocated memory is NOT freed at the end.
+   ub is either the base address of a link-field allocated by alloc_lnk or
+   the address returned by udfld().
+
+ void ape_spatial_links(su3_dble* ub, double a, int proj_su3, int piter, int keep)
+   Same as above but only spatial links are used and smeared.
+
+ void free_hyp()
+   Frees all the allocated memory.
+
+ void hyp_links(double alpha1, double alpha2, double alpha3, int proj_su3,
+                int piter, int keep)
+   Replaces all double-precision link variables by the HYP-smeared
+   ones. alpha1-3 are the three parameters of the HYP-smearing and for proj_su3
+   unequal zero a projection back to SU(3) is performed after each blocking
+   step. piter is a iteration number controlling the projection methode used.
+   For keep unequal zero the allocated memory is NOT freed at the end.
+
+ void hyp_time_links(double alpha1, double alpha2, double alpha3, int proj_su3,
+                     int piter, int keep)
+   Same as hyp_links, but only the temporal links are smeared.
+
+ void hyp_space_links(double alpha1, double alpha2, double alpha3, int proj_su3,
+                      int piter, int keep)
+   Same as hyp_links, but only the spatial links are smeared.
+
+ void free_hyp_spatial()
+   Frees all the allocated memory.
+
+ void hyp_spatial_links(su3_dble* ub, double alpha1, double alpha2,
+                        int proj_su3, int piter, int keep)
+   Replaces all 3-d double-precision spatial link variables by the HYP-smeared
+   ones. alpha1-2 are the two parameters of the HYP-smearing and for proj_su3
+   unequal zero a projection back to SU(3) is performed after each blocking
+   step. piter is a iteration number controlling the projection methode used.
+   For keep unequal zero the allocated memory is NOT freed at the end.
+   ub is either the base address of a link-field allocated by alloc_lnk or the
+   address returned by udfld().
+
+ void approx_project_to_su3_dble(su3_dble *u, int iter)
+   The approximate projection to SU(3) implemented here is defined in
+   hep-lat/0506008.
+
+ void staple_sum(su3_dble *u1,su3_dble *u2,int mu,int nu,su3_dble *vb,
+                 su3_dble *cbuf)
+   Computes the sum of up- and down-staples. u1 and u2 are base addresses of
+   the global gauge field (udfld) or a lnk field  (see alloc_lnk()).
+   The links in nu direction are taken from u1, the links in mu direction
+   from u2. The result is sored in the lnk field vb and the boundary lnk
+   field vb (see alloc_buf_uk()) 

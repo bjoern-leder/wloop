@@ -1,0 +1,9 @@
+Programs for the lnk module.
+
+check1        Communication routines provided by lnkcom.
+
+check2        Staple routines provided by lnkstaple.
+
+The program check1 accept the option -bc <type> that allows the
+type of boundary condition to be chosen at runtime. When the option is not
+set, open boundary conditions are assumed.

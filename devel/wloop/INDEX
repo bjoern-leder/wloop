@@ -1,0 +1,14 @@
+
+Check programs for Wilson loops programs
+
+
+check1   Simple check and timing off the Wilson loops routine.
+
+check2   Gauge invariance check on the wloops routines.
+
+check3   Translational invariance check on the wloops routines.
+
+The programs check1, ..., check3 accept the option -bc <type> that allows the
+type of boundary condition to be chosen at runtime. When the option is not
+set, open boundary conditions are assumed.
+

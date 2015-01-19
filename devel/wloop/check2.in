@@ -1,0 +1,11 @@
+[Wloop]
+msl          4
+nss          0 1 2 3
+mwlt         4
+mwlr         4
+alpha_action 1.0 1.0 0.5
+proj_iter    0
+op_smear     HYP
+alpha        1.0 0.5
+#op_smear     APE
+#alpha        0.5

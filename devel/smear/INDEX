@@ -1,0 +1,13 @@
+Programs for the smearing module.
+
+check1        Direct check of the HYP-smearing routines.
+
+check2        Check of the hyp_links (SU(3) normalization).
+
+check3        Check of hyp_links - ape_links equivalence.
+
+time1         Timing of the smearing routines.
+
+The programs check2, check3, time1 accept the option -bc <type> that allows the
+type of boundary condition to be chosen at runtime. When the option is not
+set, open boundary conditions are assumed.

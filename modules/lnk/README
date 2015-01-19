@@ -1,0 +1,161 @@
+
+
+********************************************************************************
+
+                                 Link fields
+
+********************************************************************************
+
+
+Files
+-----
+
+lnkcom.c            Allocation of link-fields and commuincation routines.
+
+lnkplaq.c           Calculation of the plaquette sum.
+
+lnkstaple.c         Computation of staples.
+
+
+Include file
+------------
+
+The file lnk.h defines the prototypes for all externally accessible
+functions that are defined in the *.c files listed above.
+
+
+List of functions
+-----------------
+
+ void copy_bnd(su3_dble *ub)
+   Fetches the double-precision link variables on the boundaries of the
+   local lattice from the neighbouring processes and stores them in a
+   buffer. The links that stick out of the local lattice at even points
+   are also updated. The pointer ub is the base address of a link-field
+   allocated with alloc_lnk.
+
+ void copy_u0(su3_dble *ub)
+   The links that stick out of the local lattice at even points
+   are updated. The pointer ub is the base address of a link-field
+   allocated with alloc_lnk.
+
+ void copyback_u0(su3_dble *ub)
+   The links that stick out of the local lattice at even points
+   are copied back to the neighbouring processes. The pointer ub is the base
+   address of a link-field allocated with alloc_lnk.
+
+ void copy_uk(su3_dble *ub)
+   Fetches the double-precision link variables on the boundaries of the
+   local lattice from the neighbouring processes and stores them in a
+   buffer. The pointer ub is the base address of a link-field
+   allocated with alloc_lnk.
+
+ void copyback_uk(su3_dble *ub)
+   Reads the double-precision link variables on the boundaries of the
+   local lattice from the buffer and copies them back to the neighbouring
+   processes. The pointer ub is the base address of a link-field
+   allocated with alloc_lnk.
+
+ void send_uk(su3_dble *ub, su3_dble *sbuf)
+   Same as copyback_uk, but read the links from sbuf. The pointer sbuf is the
+   base address of a link-field allocated with alloc_lnk_uk.
+
+ void free_lnk(su3_dble *ub, int cb)
+   Frees the memory starting at the base adress ub, that was allocated by
+   alloc_lnk. For cb unequal zero the internal auxillary buffers are also
+   freed.
+
+ void free_buf_uk(su3_dble *ub)
+   Frees the memory starting at the base adress ub, that was allocated by
+   alloc_lnk_uk.
+
+ su3_dble* alloc_lnk()
+   Allocates memory for a double-precision link-field. The layout is the same
+   as for the field allocated by alloc_ud, but additional memory is allocated
+   for the boundary links. The base address is returned. The size is
+   (4*VOLUME+BNDRY/4+3*BNDRY/2)*sizeof(su3_dble).
+
+ su3_dble* alloc_buf_uk()
+   Allocates memory for double-precision boundary links. The base address is
+   returned. The size is (3*BNDRY/2)*sizeof(su3_dble).
+
+ su3_dble* lnk_buf(su3_dble* ub, int ix, int mu, int face)
+   Returns the address of the a link in a buffer for boundary links. The base
+   adress ub was allocated by alloc_lnk_uk or u+(4*VOLUME+BNDRY/4), where
+   u is a base address of memory allocated with alloc_lnk.
+   ix, mu define the link. And face specifies the boundary face. 
+
+ su3_dble* lnkf(su3_dble* ub, int ix, int mu, int face)
+   Returns the address of the a link in a link-field. The base
+   adress ub was allocated by alloc_lnk.
+   ix, mu define the link. ix>=VOLUME is allowed and then face specifies the
+   boundary face. If ix<VOLUME the value of face is ignored.
+
+ su3_dble* lnk(su3_dble* ub, int ix, int mu)
+   Returns the address of the a link in a link-field. The base
+   adress ub was allocated by alloc_lnk.
+   ix, mu define the link. ix<VOLUME is assumed here.
+
+ void lnk_plaq(su3_dble* ub, int ix,int mu,int nu,su3_dble **u)
+   Calculates the pointers u[4] to the four double-precision link
+   variables in the (mu,nu)-plaquette at the point ix on the local
+   lattice. The values stored at these memory locations are correct
+   only after copy_bnd(ub) is called. The base adress ub was allocated by
+   alloc_lnk.
+
+ void assign_lnk2lnk(su3_dble* ub,su3_dble* ub)
+   Copy the links of the link-field ub1 to the link-field ub2.
+   Also the links that stick out of the local lattice at even points are
+   copied. The base addresses ub1,ub2 were allocated by alloc_lnk or 
+   are the base address of the local gauge field pud[VOLUME/2][0].
+
+ void assign_ud2lnk(su3_dble* ub)
+   Copy the links of the local lattice from pud[VOLUME/2][0] to ub.
+   Also the links that stick out of the local lattice at even points are
+   copied. The base address ub was allocated by alloc_lnk.
+
+ void assign_lnk2ud(su3_dble* ub)
+   Copy the links of the local lattice from ud to pud[VOLUME/2][0] .
+   Also the links that stick out of the local lattice at even points are
+   copied. The base address ub was allocated by alloc_lnk.
+
+ int* get_lnk_idx_u0()
+   Returns the offsets of the links that stick out of the
+   local lattice in the negative directions. These are the links that are sent
+   to the neighbouring processes in copy_u0.
+
+ int* get_lnk_idx_uk()
+   Returns the offsets of the links that that are sent
+   to the neighbouring processes in copy_uk.
+
+ double lnk_plaq_sum(su3_dble *ub)
+   Returns the sum of Re(tr{U(p)}) over all 6*VOLUME*NPROC unoriented
+   plaquettes p, where U(p) is the product of the double-precision link
+   variables around p. The links are taken from the link-field ub.
+
+ void add_up_staple(su3_dble *u1o,su3_dble *u2o,int ix,int mu,int nu,su3_dble *v)
+   Computes the up-staple where u1 and u3 are taken from the link-field with
+   base address u1o and u2 is taken from u2o. The link matrices are expected
+   to be in SU(3). The result is added to v. For a definiton of u1-3 see the
+   notes below.
+
+ void add_dn_staple(su3_dble *u1o,su3_dble *u2o,int ix,int mu,int nu,su3_dble *v)
+   Same as add_up_staple, but computes the down-staple.
+
+ void add_up_staple_lnks(su3_dble *u1,su3_dble *u2,su3_dble *u3,su3_dble *v)
+   Same as add_up_staple, but uses the links in the argument.
+
+ void add_dn_staple_lnks(su3_dble *u1,su3_dble *u2,su3_dble *u3,su3_dble *v)
+   Same as add_dn_staple, but uses the links in the argument.
+
+ void add_up_staple_save(su3_dble *u1o,su3_dble *u2o,int ix,int mu,int nu,su3_dble *v)
+   Same as add_up_staple, but the links can be general 3x3 matrices.
+
+ void add_dn_staple_save(su3_dble *u1o,su3_dble *u2o,int ix,int mu,int nu,su3_dble *v)
+   Same as add_dn_staple, but the links can be general 3x3 matrices.
+
+ void add_up_staple_lnks_save(su3_dble *u1,su3_dble *u2,su3_dble *u3,su3_dble *v)
+   Same as add_up_staple_lnks, but the links can be general 3x3 matrices.
+
+ void add_dn_staple_lnks_save(su3_dble *u1,su3_dble *u2,su3_dble *u3,su3_dble *v)
+   Same as add_dn_staple_lnks, but the links can be general 3x3 matrices.

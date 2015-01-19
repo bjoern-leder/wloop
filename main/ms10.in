@@ -1,0 +1,29 @@
+
+[Run name]
+name         Snoopy137
+
+[Directories]
+log_dir      ../data/ms10/log
+dat_dir      ../data/ms10/dat
+loc_dir      /home/leder/projects/cnfgs/Snoopy
+cnfg_dir     /home/leder/projects/cnfgs/Snoopy
+
+[Configurations]
+first        1
+last         5
+step         1
+
+[Boundary conditions]
+type         0
+
+[Wloop]
+msl          4
+nss          0 10 20 30
+mwlt         4
+mwlr         4
+alpha_action 1.0 1.0 0.5
+proj_iter    4
+op_smear     HYP
+alpha        0.75 0.3
+#op_smear     APE
+#alpha        0.5
