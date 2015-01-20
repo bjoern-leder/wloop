@@ -8,8 +8,8 @@
 
 WILSON LOOPS
 
-The programs compute rectangular Wilson on imported gauge configuration. The 
-links are smeared to (i) define a static action and (ii) to construct an
+The programs compute rectangular Wilson loops on imported gauge configuration.
+The links are smeared to (i) define a static action and (ii) to construct an
 operator basis which results in a Wilson loop correlation matrix. See
 
   M.Donnellan, F.Knechtli, B.Leder and R.Sommer,

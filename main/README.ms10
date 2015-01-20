@@ -111,12 +111,11 @@ option is set, the directory loc_dir must be accessible from all processes.
 
 OUTPUT DATA
 
-For each configuration, the Wilson flow is integrated from flow time 0 to time
-"nstep"*"eps" in steps of eps using the specified integrator. After every
-"dnms" integration steps, the time-slice sums of the densities of the Wilson
-plaquette action, the Yang-Mills action and the topological charge are
-computed (see uflds/plaq_sum.c, tcharge/ftensor.c, tcharge/ym_action.c and
-tcharge/tcharge.c).
+For each configuration, all Wilson loops of size (t x r) with t=1,...,mwlt
+and r=1,...,mwlr, and smearing levels sl1, sl2 for the space-like links at the
+two space-like edges with sl1,sl2=nns[0],...,nns[msl-1] are computed. The Wilson
+loops are summed over the three spacial directions and the spatial volume, but
+not over time (see modules/wloop/wloop.c and modules/wloop/smear.c). 
 
 At the beginning of the measurement data file the program writes the data
 contained in the header structure
