@@ -551,7 +551,7 @@ static void print_info(void)
          printf("Continuation run\n\n");
       else
       {
-         printf("Computation of Wilson flow observables\n");
+         printf("Computation of Wilson loops\n");
          printf("--------------------------------------\n\n");
       }
 
