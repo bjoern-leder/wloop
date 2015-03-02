@@ -52,7 +52,7 @@ static struct
 
 static int my_rank,noexp,append,endian;
 static int first,last,step;
-static int ipgrd[2],flint;
+static int ipgrd[2];
 
 static char line[NAME_SIZE];
 static char log_dir[NAME_SIZE],dat_dir[NAME_SIZE];
@@ -658,28 +658,6 @@ static void save_data(void)
    }
 }
 
-/*
-static void print_log(void)
-{
-   int in,dn,nn,din;
-   double eps;
-
-   if (my_rank==0)
-   {
-      dn=file_head.dn;
-      nn=file_head.nn;
-      eps=file_head.eps;
-
-      din=nn/10;
-      if (din<1)
-         din=1;
-
-      for (in=0;in<=nn;in+=din)
-         printf("n = %3d, t = %.2e, Wact = %.6e, Yact = %.6e, Q = % .2e\n",
-                in*dn,eps*(double)(in*dn),Wact[in],Yact[in],Qtop[in]);
-   }
-}
-*/
 
 static void check_endflag(int *iend)
 {
@@ -716,8 +694,6 @@ int main(int argc,char *argv[])
    print_info();
 
    geometry();
-   if (flint)
-      alloc_wfd(1);
 
    iend=0;
    wtavg=0.0;
